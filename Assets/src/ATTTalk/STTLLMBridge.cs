@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*using LLMUnitySamples;
+using LLMUnitySamples;
 
 public class STTLLMBridge : MonoBehaviour
 {
@@ -10,4 +10,3 @@ public class STTLLMBridge : MonoBehaviour
         chatBot.onInputFieldSubmit(userSpeech.Value);
     }
 }
-*/

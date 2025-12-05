@@ -80,6 +80,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/undreamai-v1.2.6-llamacpp.meta
 /[Aa]ssets/[Ss]treamingAssets/Models/*
 /[Aa]ssets/[Ss]treamingAssets/Models.meta
+/[Aa]ssets/[Ss]treamingAssets/espeak-ng-data/*
+/[Aa]ssets/[Ss]treamingAssets/espeak-ng-data.meta
 
 /[Aa]ssets/[Ss]treamingAssetsBU/*
 /[Aa]ssets/[Ss]treamingAssetsBU/*.meta
