@@ -544,6 +544,7 @@ namespace LLMUnity
             }
 
             completionCallback?.Invoke();
+            Debug.Log("Let's do that.");
             return result;
         }
 

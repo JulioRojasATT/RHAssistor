@@ -1,0 +1,17 @@
+{
+    "name": "ATTTalk",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f638fd7b4826c5243b520768470e9262",
+        "GUID:c917bd4d1a98d4747a5057ac9620a438"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

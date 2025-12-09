@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Whisper.Utils;
 using Button = UnityEngine.UI.Button;
@@ -28,7 +29,11 @@ namespace Whisper.Samples
         
         private string _buffer;
 
-        [SerializeField] private StringScriptableValue textValue;
+        [Header("Finish Events")]
+        /// <summary>
+        /// Called when speech transcription is finished
+        /// </summary>
+        [SerializeField] private UnityEvent<string> onSpeechTranscriptionFinished;
 
         private void Awake()
         {
@@ -87,8 +92,8 @@ namespace Whisper.Samples
             var text = res.Result;
             if (printLanguage)
                 text += $"\n\nLanguage: {res.Language}";
-
-            textValue.SetValue(text);
+            
+            onSpeechTranscriptionFinished.Invoke(text);
             
             UiUtils.ScrollDown(scroll);
         }

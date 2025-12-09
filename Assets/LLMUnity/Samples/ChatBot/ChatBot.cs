@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LLMUnity;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace LLMUnitySamples
 {
@@ -27,6 +28,11 @@ namespace LLMUnitySamples
         private BubbleUI playerUI, aiUI;
         private bool warmUpDone = false;
         private int lastBubbleOutsideFOV = -1;
+
+        private Bubble aiBubble;
+
+        [Header("Connection")]
+        [SerializeField] private UnityEvent<string> onAnswerGenerated;
 
         void Start()
         {
@@ -73,9 +79,11 @@ namespace LLMUnitySamples
 
         void onInputFieldSubmit(string newText)
         {
+            Debug.Log("New Text is " + newText + ". Input bubble text is " + inputBubble.GetText());
             inputBubble.ActivateInputField();
             if (blockInput || newText.Trim() == "" || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
+                Debug.Log("Blocking Interaction");
                 StartCoroutine(BlockInteraction());
                 return;
             }
@@ -84,9 +92,16 @@ namespace LLMUnitySamples
             string message = inputBubble.GetText().Replace("\v", "\n");
 
             AddBubble(message, true);
-            Bubble aiBubble = AddBubble("...", false);
-            Task chatTask = llmCharacter.Chat(message, aiBubble.SetText, AllowInput);
+            aiBubble = AddBubble("...", false);
+            Task chatTask = llmCharacter.Chat(message, aiBubble.SetText, ProcessAIAnswer,false);
             inputBubble.SetText("");
+        }
+        
+        public void SubmitPrompt(string prompt) {
+            Debug.Log("Prompt submited is " + prompt);
+            inputBubble.SetText("");
+            inputBubble.SetText(prompt);
+            onInputFieldSubmit(prompt);
         }
 
         public void WarmUpCallback()
@@ -94,6 +109,11 @@ namespace LLMUnitySamples
             warmUpDone = true;
             inputBubble.SetPlaceHolderText("Message me");
             AllowInput();
+        }
+
+        public void ProcessAIAnswer() {
+            AllowInput();
+            onAnswerGenerated.Invoke(aiBubble.GetText());
         }
 
         public void AllowInput()
