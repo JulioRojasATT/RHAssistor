@@ -96,7 +96,7 @@ public class LipSyncRuntime : MonoBehaviour
         if (ph == "sil" || ph == "sp") return "Sil";
         if (ph == "p" || ph == "b" || ph == "m") return "MBP";
         if (ph == "f" || ph == "v") return "FF";
-        if (ph == "th" || ph == "ð" || ph == "?") return "TH";
+        if (ph == "th") return "TH";
         if (ph == "t" || ph == "d" || ph == "s" || ph == "z") return "SS";
         if (ph == "k" || ph == "g") return "kk";
         if (ph == "ch" || ph == "sh" || ph == "jh") return "CH";
