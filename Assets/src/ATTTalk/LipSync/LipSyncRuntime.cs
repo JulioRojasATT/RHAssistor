@@ -2,22 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class PhonemeEntry
-{
-    public string ph;
-    public float start;
-    public float end;
-}
-
-[Serializable]
-public class PhonemeTimeline
-{
-    public string audioFile;
-    public float duration;
-    public List<PhonemeEntry> phonemes;
-}
-
 public class LipSyncRuntime : MonoBehaviour
 {
     [Header("References")]
@@ -38,14 +22,6 @@ public class LipSyncRuntime : MonoBehaviour
     private PhonemeTimeline timeline;
     private List<VisemeKey> visemeKeys;
 
-    [Serializable]
-    public class VisemeMapEntry
-    {
-        public string viseme;
-        public int blendShapeIndex;
-        [Range(0, 1)] public float weight = 1f; // multiplier
-    }
-
     private Dictionary<string, List<VisemeMapEntry>> visemeToBlend;
     void Awake()
     {
@@ -61,7 +37,7 @@ public class LipSyncRuntime : MonoBehaviour
     void BuildMap()
     {
         visemeToBlend = new Dictionary<string, List<VisemeMapEntry>>();
-        foreach (var e in visemeMap)
+        foreach (VisemeMapEntry e in visemeMap)
         {
             if (!visemeToBlend.ContainsKey(e.viseme)) visemeToBlend[e.viseme] = new List<VisemeMapEntry>();
             visemeToBlend[e.viseme].Add(e);
@@ -107,15 +83,7 @@ public class LipSyncRuntime : MonoBehaviour
         // fallback: if vowel-like -> AH
         if ("aeiou".IndexOf(ph[0]) >= 0) return "AH";
         return null;
-    }
-
-    [Serializable]
-    public class VisemeKey
-    {
-        public string viseme;
-        public float start;
-        public float end;
-    }
+    }    
 
     void Update()
     {

@@ -1,0 +1,12 @@
+{
+  "audioFile": "line1.wav",
+  "duration": 2.34,
+  "phonemes": [
+    { "ph": "sil", "start": 0.000, "end": 0.120 },
+    { "ph": "p",   "start": 0.120, "end": 0.170 },
+    { "ph": "ae",  "start": 0.170, "end": 0.330 },
+    { "ph": "t",   "start": 0.330, "end": 0.360 },
+    { "ph": "s",   "start": 0.360, "end": 0.520 },
+    { "ph": "sil", "start": 0.520, "end": 2.340 }
+  ]
+}

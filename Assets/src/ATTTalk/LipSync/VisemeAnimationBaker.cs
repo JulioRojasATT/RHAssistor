@@ -10,7 +10,7 @@ public class VisemeAnimationBaker : EditorWindow
     public TextAsset phonemeJson;
     public SkinnedMeshRenderer skinnedMesh;
     public string clipPath = "Assets/lipsync_clip.anim";
-    public List<LipSyncRuntime.VisemeMapEntry> mapping = new List<LipSyncRuntime.VisemeMapEntry>();
+    public List<VisemeMapEntry> mapping = new List<VisemeMapEntry>();
     public float crossfade = 0.04f;
     [MenuItem("Tools/Viseme Animation Baker")]
     public static void ShowWindow()
@@ -39,9 +39,9 @@ public class VisemeAnimationBaker : EditorWindow
             return;
         }
 
-        var timeline = JsonUtility.FromJson<LipSyncRuntime.PhonemeTimeline>(phonemeJson.text);
+        var timeline = JsonUtility.FromJson<PhonemeTimeline>(phonemeJson.text);
         // build viseme keys using runtime mapping function:
-        var runner = ScriptableObject.CreateInstance<LipSyncRuntime>();
+        //var runner = ScriptableObject.CreateInstance<LipSyncRuntime>();
         // copy mapping entries from UI? For simplicity call embedded mapping
         // We'll reuse the runtime PhonemeToViseme mapping by reflection-ish approach:
         // Simpler: create viseme key list similar to runtime (quick inline)
@@ -108,6 +108,24 @@ public class VisemeAnimationBaker : EditorWindow
 
     // small local definitions to reuse the structure:
     string BasicPhonemeToViseme(string ph)
+    {
+        ph = ph.ToLowerInvariant();
+        if (ph == "sil" || ph == "sp") return "Sil";
+        if (ph == "p" || ph == "b" || ph == "m") return "MBP";
+        if (ph == "f" || ph == "v") return "FF";
+        if (ph == "th") return "TH";
+        if (ph == "t" || ph == "d" || ph == "s" || ph == "z") return "SS";
+        if (ph == "k" || ph == "g") return "kk";
+        if (ph == "ch" || ph == "sh" || ph == "jh") return "CH";
+        if (ph == "n" || ph == "l") return "NN";
+        if (ph == "aa" || ph == "ah" || ph == "ae" || ph == "a") return "AH";
+        if (ph == "ow" || ph == "o" || ph == "ao") return "OH";
+        if (ph == "iy" || ph == "ih" || ph == "ee") return "EE";
+        if (ph.Length > 0 && "aeiou".IndexOf(ph[0]) >= 0) return "AH";
+        return null;
+    }
+
+    string BasicPhonemeToVisemeSpanish(string ph)
     {
         ph = ph.ToLowerInvariant();
         if (ph == "sil" || ph == "sp") return "Sil";
