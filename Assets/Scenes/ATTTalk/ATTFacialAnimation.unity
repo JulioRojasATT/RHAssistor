@@ -133,7 +133,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.010485108
+      value: -0.007907921
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
@@ -143,12 +143,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.067714
+      value: 0.06801365
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.00000035762784
+      value: -0.037865385
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
@@ -158,7 +158,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.99928284
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
@@ -173,12 +173,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 184.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759823042612122474, guid: e584a70f40429e84d91ccc5a34617de1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e584a70f40429e84d91ccc5a34617de1,
         type: 3}
@@ -234,43 +239,46 @@ MonoBehaviour:
   audioSource: {fileID: 1373898867}
   phonemeJson: {fileID: 4900000, guid: de86cd6dd255d1d4798212b89ad2f2b6, type: 3}
   visemeMap:
-  - viseme: Sil
-    blendShapeIndex: 1
-    weight: 1
-  - viseme: MBP
-    blendShapeIndex: 2
-    weight: 1
-  - viseme: FF
-    blendShapeIndex: 3
-    weight: 1
-  - viseme: TH
-    blendShapeIndex: 4
-    weight: 1
-  - viseme: SS
-    blendShapeIndex: 5
-    weight: 1
-  - viseme: kk
-    blendShapeIndex: 6
-    weight: 1
-  - viseme: CH
-    blendShapeIndex: 7
-    weight: 1
-  - viseme: NN
-    blendShapeIndex: 8
-    weight: 1
-  - viseme: AH
-    blendShapeIndex: 9
-    weight: 1
-  - viseme: OH
-    blendShapeIndex: 10
+  - viseme: AA
+    blendShapeIndex: 0
     weight: 1
   - viseme: EE
+    blendShapeIndex: 1
+    weight: 1
+  - viseme: IH
+    blendShapeIndex: 2
+    weight: 1
+  - viseme: OH
+    blendShapeIndex: 3
+    weight: 1
+  - viseme: OU
+    blendShapeIndex: 4
+    weight: 1
+  - viseme: BMP
+    blendShapeIndex: 5
+    weight: 1
+  - viseme: FV
+    blendShapeIndex: 6
+    weight: 1
+  - viseme: L
+    blendShapeIndex: 7
+    weight: 1
+  - viseme: TH/DH
+    blendShapeIndex: 8
+    weight: 1
+  - viseme: R
+    blendShapeIndex: 9
+    weight: 1
+  - viseme: S/Z
+    blendShapeIndex: 10
+    weight: 1
+  - viseme: K/G/H
     blendShapeIndex: 11
     weight: 1
-  - viseme: AH
+  - viseme: REST
     blendShapeIndex: 12
     weight: 1
-  crossfade: 0.04
+  crossfade: 0.07
 --- !u!4 &449363093
 Transform:
   m_ObjectHideFlags: 0
@@ -669,7 +677,6 @@ GameObject:
   - component: {fileID: 974899795}
   - component: {fileID: 974899794}
   - component: {fileID: 974899793}
-  - component: {fileID: 974899792}
   m_Layer: 0
   m_Name: AudioAnalizer
   m_TagString: Untagged
@@ -677,48 +684,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &974899792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974899791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fea93e259298934ca322ac20d90e384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnableCallback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 974899793}
-        m_TargetAssemblyTypeName: AudioAnalizerConnector, Assembly-CSharp
-        m_MethodName: GenerateVisemes
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDisableCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStartCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAwakeCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDestroyCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFirstFrameCallback:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &974899793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioAnalyzer: {fileID: 974899794}
-  audioClip: {fileID: 8300000, guid: 2f8a92ae57b4341c68e81202d049ca31, type: 3}
+  audioClip: {fileID: 8300000, guid: 7941e3ce3062a8b49b1667a382280535, type: 3}
   transcript: "Hola, bienvenido a \xE9sta experiencia inmersiva de capacitaci\xF3n
     digital. Aqu\xED aprender\xE1s los elementos principales de una tienda Ei Ti
     An Ti, as\xED como su importancia. Est\xE1 creada para que todos nuestros clientes

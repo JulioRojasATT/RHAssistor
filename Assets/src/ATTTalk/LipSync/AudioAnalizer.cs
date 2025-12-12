@@ -162,29 +162,134 @@ public class AudioAnalyzer : MonoBehaviour
     // -----------------------------------------------------------------------
     // STEP 4 — Distribute visemes along audio duration using RMS envelope
     // -----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // STEP 4 — Distribute visemes along audio duration using RMS envelope
+    // -----------------------------------------------------------------------
     private List<VisemeKey> DistributeVisemesOverTime(
         List<string> visemes,
         float[] envelope,
         float clipLength)
     {
         List<VisemeKey> keys = new List<VisemeKey>();
+        if (visemes == null || visemes.Count == 0)
+            return keys;
 
-        if (visemes.Count == 0) return keys;
-
-        float avgDuration = clipLength / visemes.Count;
-
-        for (int i = 0; i < visemes.Count; i++)
+        if (envelope == null || envelope.Length == 0 || clipLength <= 0f)
         {
-            float t = i * avgDuration;
-            float d = avgDuration;
+            // fallback to equal distribution
+            float avgDur = clipLength / visemes.Count;
+            for (int i = 0; i < visemes.Count; i++)
+            {
+                keys.Add(new VisemeKey()
+                {
+                    viseme = visemes[i],
+                    start = i * avgDur,
+                    end = (i * avgDur) + avgDur
+                });
+            }
+            return keys;
+        }
+
+        int m = envelope.Length;
+        // Build cumulative energy (use energy + epsilon to avoid zero total)
+        double[] cumulative = new double[m];
+        double sum = 0.0;
+        for (int i = 0; i < m; i++)
+        {
+            // Use squared envelope as energy; envelope is already RMS-ish, but squaring converts to energy
+            double e = envelope[i] * envelope[i];
+            sum += e;
+            cumulative[i] = sum;
+        }
+
+        if (sum <= 1e-9)
+        {
+            // silent clip fallback to equal distribution
+            float avgDur = clipLength / visemes.Count;
+            for (int i = 0; i < visemes.Count; i++)
+            {
+                keys.Add(new VisemeKey()
+                {
+                    viseme = visemes[i],
+                    start = i * avgDur,
+                    end = (i * avgDur) + avgDur
+                });
+            }
+            return keys;
+        }
+
+        // Helper: get time (seconds) corresponding to envelope index
+        double samplesPerEnvelopeBin = (double)clipLength / (double)m; // seconds per bin
+
+        // Compute boundaries at energy fractions 0, 1/N, 2/N, ..., 1
+        int N = visemes.Count;
+        double totalEnergy = cumulative[m - 1];
+
+        // We'll compute N+1 boundary times
+        double[] boundaries = new double[N + 1];
+        boundaries[0] = 0.0;
+        boundaries[N] = clipLength;
+
+        for (int b = 1; b < N; b++)
+        {
+            double target = (b / (double)N) * totalEnergy;
+
+            // binary search for first index where cumulative >= target
+            int lo = 0;
+            int hi = m - 1;
+            int idx = hi;
+            while (lo <= hi)
+            {
+                int mid = (lo + hi) / 2;
+                if (cumulative[mid] >= target)
+                {
+                    idx = mid;
+                    hi = mid - 1;
+                }
+                else
+                {
+                    lo = mid + 1;
+                }
+            }
+
+            // convert idx to time (use idx + 0.5 to center in the bin)
+            double t = (idx + 0.5) * samplesPerEnvelopeBin;
+            // clamp to valid range
+            if (t < 0.0) t = 0.0;
+            if (t > clipLength) t = clipLength;
+            boundaries[b] = t;
+        }
+
+        // Create viseme keys using boundaries
+        const float minDuration = 0.02f; // avoid extremely short visemes (20 ms)
+        for (int i = 0; i < N; i++)
+        {
+            double start = boundaries[i];
+            double end = boundaries[i + 1];
+            double dur = end - start;
+            if (dur < minDuration)
+            {
+                // expand tiny durations by borrowing from neighbors where possible
+                double add = minDuration - dur;
+                // try to extend end
+                double newEnd = Math.Min(clipLength, end + add * 0.5);
+                double newStart = Math.Max(0.0, start - add * 0.5);
+                start = newStart;
+                end = newEnd;
+                dur = end - start;
+                if (dur < 0.001) dur = minDuration; // absolute guard
+            }
 
             keys.Add(new VisemeKey()
             {
                 viseme = visemes[i],
-                start = t,
-                end = t+d
+                start = (float)start,
+                end = (float)start + (float)dur
             });
         }
+
+        // Optional merging: collapse tiny silences between identical visemes
+        // (Not done here — LipSyncRuntime/consumer can merge or smooth if desired)
 
         return keys;
     }

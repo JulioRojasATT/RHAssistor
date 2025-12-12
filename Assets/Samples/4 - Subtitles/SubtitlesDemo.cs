@@ -17,6 +17,7 @@ namespace Whisper.Samples
         public WhisperManager whisper;
         public AudioClip clip;
         
+         
         [Header("UI")] 
         public Button button;
         public Text outputText;

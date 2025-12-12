@@ -44,6 +44,11 @@ public class LipSyncRuntime : MonoBehaviour
         }
     }
 
+    public void SetVisemeKeys(List<VisemeKey> visemeKeys)
+    {
+        this.visemeKeys = visemeKeys;
+    }
+
     List<VisemeKey> BuildVisemeKeysFromPhonemes(List<PhonemeEntry> phonemes)
     {
         var keys = new List<VisemeKey>();
