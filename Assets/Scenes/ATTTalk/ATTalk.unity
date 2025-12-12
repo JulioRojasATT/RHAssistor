@@ -5083,7 +5083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1460272526
 Transform:
   m_ObjectHideFlags: 0
@@ -5130,15 +5130,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2134330461}
-        m_TargetAssemblyTypeName: PiperConnector, ATTTalk
-        m_MethodName: SpeakToMe
+        m_TargetAssemblyTypeName: PiperConnector, ATTTalkPIperBridge
+        m_MethodName: TextToSpeech
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Hola mundo
+          m_StringArgument: "Hola. \xBFC\xF3mo te encuentras hoy?"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1476611719
@@ -6442,6 +6442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2134330462}
+  - component: {fileID: 2134330464}
   - component: {fileID: 2134330461}
   - component: {fileID: 2134330463}
   m_Layer: 0
@@ -6463,9 +6464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab1c3751634f444b930dbad891063b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelPath: es/esMX/claude/es_MX-claude-high.onnx
-  espeakDataPath: espeak-ng-data
-  audioSource: {fileID: 2018979863}
+  piper: {fileID: 2134330464}
+  _source: {fileID: 2018979863}
   onAudioClipGenerated:
     m_PersistentCalls:
       m_Calls:
@@ -6492,6 +6492,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 146899938}
+        m_TargetAssemblyTypeName: Printer, Assembly-CSharp
+        m_MethodName: Print
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Answer Audio Generated
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &2134330462
@@ -6522,6 +6534,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   piperConnector: {fileID: 2134330461}
+--- !u!114 &2134330464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134330459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0030b47ca80ed44b32bdc601eb4b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backend: 512
+  model: {fileID: 5022602860645237092, guid: 4e31f57914448e840917c684bc068b4d, type: 3}
+  voice: es
+  sampleRate: 22050
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
