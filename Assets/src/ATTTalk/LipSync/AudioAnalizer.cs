@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Generates approximate viseme timing from an AudioClip and Spanish transcript.
 /// </summary>
-public class AudioAnalyzer : MonoBehaviour
+public class AudioAnalyzer
 {
 
     // -----------------------------------------------------------------------
