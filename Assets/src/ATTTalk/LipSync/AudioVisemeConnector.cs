@@ -23,8 +23,6 @@ public class AudioVisemeConnector : MonoBehaviour
     {
         audioAnalyzer = new AudioAnalyzer();
         List<VisemeKey> visemeKeys = audioAnalyzer.GenerateVisemeTiming(aiAnswerAudioClip.Value, transcript.Value);
-        Debug.Log("Audio is separated in the following visemes:");
-        visemeKeys.ForEach(key => Debug.Log("Viseme " + key.viseme + " happens at " + key.start + "and ends at " + key.end + "."));
         lipSync.SetVisemeKeys(visemeKeys);        
         onVisemeKeysCalculated.Invoke();
         Talk();
